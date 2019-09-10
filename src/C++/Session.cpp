@@ -583,13 +583,16 @@ bool Session::sendRaw( Message& message, int num )
       try
       {
         m_application.toApp( message, m_sessionID );
+	//std::cout  << "\nbefore toString() " << now_ts();
         message.toString( messageString );
+	//std::cout << "\nafter toString() " << now_ts();
 
         if( !num )
           persist( message, messageString );
 
         if ( isLoggedOn() )
           send( messageString );
+	//std::cout << "sent done " << now_ts() << std::endl;
       }
       catch ( DoNotSend& ) { return false; }
     }

@@ -696,6 +696,13 @@ typedef StringConvertor TZTIMESTAMP_CONVERTOR;
 typedef StringConvertor XMLDATA_CONVERTOR;
 typedef StringConvertor LANGUAGE_CONVERTOR;
 typedef CheckSumConvertor CHECKSUM_CONVERTOR;
+
+
+inline std::string now_ts(){
+  auto ts = UtcTimeStamp();
+  ts.setCurrent();
+   return UtcTimeStampConvertor::convert( ts, 9);
+ }
 }
 
 #endif //FIX_FIELDCONVERTORS_H

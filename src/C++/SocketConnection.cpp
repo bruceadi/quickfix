@@ -29,6 +29,7 @@
 #include "SocketInitiator.h"
 #include "Session.h"
 #include "Utility.h"
+#include "FieldConvertors.h"
 
 namespace FIX
 {
@@ -68,7 +69,6 @@ bool SocketConnection::send( const std::string& msg )
   signal();
   return true;
 }
-
 bool SocketConnection::processQueue()
 {
   Locker l( m_mutex );
@@ -77,14 +77,18 @@ bool SocketConnection::processQueue()
 
   struct timeval timeout = { 0, 0 };
   fd_set writeset = m_fds;
+  //auto ts1 = now_ts(); 
   if( select( 1 + m_socket, 0, &writeset, 0, &timeout ) <= 0 )
     return false;
     
+  //auto ts2 = now_ts(); 
   const std::string& msg = m_sendQueue.front();
 
   ssize_t result = socket_send
     ( m_socket, msg.c_str() + m_sendLength, msg.length() - m_sendLength );
 
+  //auto ts3 = now_ts(); 
+  //std::cout << "\nts1:" << ts1 << ",ts2:" << ts2 << ",ts3:" << ts3 << std::endl;
   if( result > 0 )
     m_sendLength += result;
 

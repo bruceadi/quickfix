@@ -598,7 +598,7 @@ void Application::queryHeader( FIX::Header& header )
   header.setField( queryTargetCompID() );
 
   if ( queryConfirm( "Use a TargetSubID" ) )
-    header.setField( queryTargetSubID() );
+    ;//header.setField( queryTargetSubID() );
 }
 
 char Application::queryAction()
@@ -631,7 +631,8 @@ int Application::queryVersion()
   << "5) FIX.4.4" << std::endl
   << "6) FIXT.1.1 (FIX.5.0)" << std::endl
   << "BeginString: ";
-  std::cin >> value;
+  //std::cin >> value;
+  value = '3';
   switch ( value )
   {
     case '1': return 40;
@@ -648,7 +649,8 @@ bool Application::queryConfirm( const std::string& query )
 {
   std::string value;
   std::cout << std::endl << query << "?: ";
-  std::cin >> value;
+  //std::cin >> value;
+  value = "Y";
   return toupper( *value.c_str() ) == 'Y';
 }
 
@@ -656,7 +658,8 @@ FIX::SenderCompID Application::querySenderCompID()
 {
   std::string value;
   std::cout << std::endl << "SenderCompID: ";
-  std::cin >> value;
+  //	std::cin >> value;
+  value = "CLIENT1";
   return FIX::SenderCompID( value );
 }
 
@@ -664,7 +667,8 @@ FIX::TargetCompID Application::queryTargetCompID()
 {
   std::string value;
   std::cout << std::endl << "TargetCompID: ";
-  std::cin >> value;
+  //std::cin >> value;
+  value = "EXECUTOR";
   return FIX::TargetCompID( value );
 }
 
@@ -672,15 +676,21 @@ FIX::TargetSubID Application::queryTargetSubID()
 {
   std::string value;
   std::cout << std::endl << "TargetSubID: ";
-  std::cin >> value;
+  //std::cin >> value;
   return FIX::TargetSubID( value );
 }
 
 FIX::ClOrdID Application::queryClOrdID()
 {
+  static int id  = 100;
+  
   std::string value;
-  std::cout << std::endl << "ClOrdID: ";
-  std::cin >> value;
+  //std::cout << std::endl << "ClOrdID: ";
+  //std::cin >> value;
+  std::ostringstream oss;
+  oss << id;
+  value = oss.str();
+  ++id;
   return FIX::ClOrdID( value );
 }
 
@@ -696,7 +706,8 @@ FIX::Symbol Application::querySymbol()
 {
   std::string value;
   std::cout << std::endl << "Symbol: ";
-  std::cin >> value;
+  //std::cin >> value;
+  value = "IBM Equity";
   return FIX::Symbol( value );
 }
 
@@ -713,7 +724,8 @@ FIX::Side Application::querySide()
   << "7) Cross Short Exempt" << std::endl
   << "Side: ";
 
-  std::cin >> value;
+  //std::cin >> value;
+  value = '1';
   switch ( value )
   {
     case '1': return FIX::Side( FIX::Side_BUY );
@@ -731,7 +743,8 @@ FIX::OrderQty Application::queryOrderQty()
 {
   long value;
   std::cout << std::endl << "OrderQty: ";
-  std::cin >> value;
+  //std::cin >> value;
+  value = 77;
   return FIX::OrderQty( value );
 }
 
@@ -745,7 +758,8 @@ FIX::OrdType Application::queryOrdType()
   << "4) Stop Limit" << std::endl
   << "OrdType: ";
 
-  std::cin >> value;
+  //std::cin >> value;
+  value = '2';
   switch ( value )
   {
     case '1': return FIX::OrdType( FIX::OrdType_MARKET );
@@ -760,7 +774,8 @@ FIX::Price Application::queryPrice()
 {
   double value;
   std::cout << std::endl << "Price: ";
-  std::cin >> value;
+  //std::cin >> value;
+  value = 12.34;
   return FIX::Price( value );
 }
 
@@ -783,7 +798,8 @@ FIX::TimeInForce Application::queryTimeInForce()
   << "5) GTX" << std::endl
   << "TimeInForce: ";
 
-  std::cin >> value;
+  //std::cin >> value;
+  value = '1';
   switch ( value )
   {
     case '1': return FIX::TimeInForce( FIX::TimeInForce_DAY );
