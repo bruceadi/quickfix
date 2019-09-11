@@ -92,6 +92,10 @@ public:
     : m_tag( tag ), m_string(string), m_metrics( no_metrics() )
   {}
 
+  FieldBase( int tag, std::string&& string )
+    : m_tag( tag ), m_string(std::move(string)), m_metrics( no_metrics() )
+  {}
+
   virtual ~FieldBase() {}
 
   FieldBase( const FieldBase& rhs )
